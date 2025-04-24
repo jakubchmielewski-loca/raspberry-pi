@@ -1,5 +1,9 @@
 # Instrukcja
 
+## Przygotowanie
+
+Przy instalacji Raspberry Pi OS należy wybrać przeglądarkę Firefox.
+
 ## Krok 1
 
 Uruchom przeglądarkę Firefox i przejdź pod adres URL który będzie uruchamiany na komputerze, następnie zaakceptuj prośbę o dostęp do kamery komputera. 
