@@ -11,5 +11,5 @@ Wykonaj w shellu następującą komendę:
 ```
 curl -O https://raw.githubusercontent.com/jakubchmielewski-loca/raspberry-pi/main/install.sh && \n
 chmod +x install.sh && \n
-./install.sh https://loca.pl
+./install.sh https://example.com
 ```
