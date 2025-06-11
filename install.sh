@@ -50,6 +50,9 @@ if ! grep -q "wlr-randr --output HDMI-A-1 --transform 270" "$STARTUP_FILE"; then
   echo "sleep 5"
   echo "URL=$1" >> "$STARTUP_FILE"
   echo "wlr-randr --output HDMI-A-1 --transform 270" >> "$STARTUP_FILE"
+  echo "wlr-randr --output HDMI-A-2 --transform 270" >> "$STARTUP_FILE"
+  echo "xrandr --output HDMI-1 --rotate right" >> "$STARTUP_FILE"
+  echo "xrandr --output HDMI-2 --rotate right" >> "$STARTUP_FILE"
   echo "firefox --kiosk $URL" >> "$STARTUP_FILE"
 fi
 
