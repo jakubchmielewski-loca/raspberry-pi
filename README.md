@@ -17,7 +17,7 @@ Uruchom przeglądarkę Firefox i przejdź pod adres URL który będzie uruchami
 
 ## Krok 2
 
-Wykonaj w shellu następującą komendę:
+Wykonaj w shellu następującą komendę (podmienić https://example.com na adres który potrzebujemy mieć uruchamiany przy starcie):
 
 ```
 curl -O https://raw.githubusercontent.com/jakubchmielewski-loca/raspberry-pi/main/install.sh && \n
