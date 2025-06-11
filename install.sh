@@ -10,6 +10,18 @@ fi
 # Parametr URL
 URL=$1
 
+if ! command -v unclutter &> /dev/null; then
+  echo "Instaluję unclutter..."
+  sudo apt update && sudo apt install -y unclutter
+else
+  echo "Unclutter już jest zainstalowany."
+fi
+
+echo "Dodaję wpisy do crontaba..."
+(crontab -l ; echo "0 8 * * * sudo reboot") | sort - | uniq - | crontab -
+(crontab -l ; echo "30 7 * * * /usr/bin/vcgencmd display_power 1") | sort - | uniq - | crontab -
+(crontab -l ; echo "0 20 * * * /usr/bin/vcgencmd display_power 0") | sort - | uniq - | crontab -
+
 # Folder autostartu (jeśli nie istnieje, tworzony jest)
 AUTOSTART_DIR="$HOME/.config/autostart"
 mkdir -p "$AUTOSTART_DIR"
@@ -35,6 +47,7 @@ STARTUP_FILE="$HOME/boot.sh"
 
 if ! grep -q "wlr-randr --output HDMI-A-1 --transform 270" "$STARTUP_FILE"; then
   echo "#!/bin/bash" > "$STARTUP_FILE"
+  echo "sleep 5"
   echo "URL=$1" >> "$STARTUP_FILE"
   echo "wlr-randr --output HDMI-A-1 --transform 270" >> "$STARTUP_FILE"
   echo "firefox --kiosk $URL" >> "$STARTUP_FILE"
