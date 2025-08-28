@@ -59,7 +59,7 @@ echo "Plik .desktop został utworzony i zapisany w: $DESKTOP_FILE"
 
 STARTUP_FILE="$HOME/boot.sh"
 
-rm $STARTUP_FILE
+rm -f $STARTUP_FILE
 
 if ! grep -q "wlr-randr --output HDMI-A-1 --transform 270" "$STARTUP_FILE"; then
   echo "#!/bin/bash" > "$STARTUP_FILE"
