@@ -10,11 +10,25 @@ fi
 # Parametr URL
 URL=$1
 
+echo "Aktualizuje system"
+sudo apt update && sudo apt upgrade -y
+
 if ! command -v unclutter &> /dev/null; then
   echo "Instaluję unclutter..."
-  sudo apt update && sudo apt install -y unclutter
+  sudo apt install -y unclutter
 else
   echo "Unclutter już jest zainstalowany."
+fi
+
+if ! command -v teamviewer &> /dev/null; then
+  echo "Instaluję teamviewer..."
+  curl -L -o /tmp/teamviewer-host_arm64.deb https://download.teamviewer.com/download/linux/teamviewer-host_arm64.deb
+  sudo apt install -y -o Dpkg::Options::="--force-confold" /tmp/teamviewer-host_arm64.deb || sudo apt --fix-broken install -y
+  rm /tmp/teamviewer-host_arm64.deb
+  sudo systemctl enable teamviewerd
+  sudo systemctl start teamviewerd
+else
+  echo "Teamviewer już jest zainstalowany."
 fi
 
 echo "Dodaję wpisy do crontaba..."
@@ -45,6 +59,8 @@ echo "Plik .desktop został utworzony i zapisany w: $DESKTOP_FILE"
 
 STARTUP_FILE="$HOME/boot.sh"
 
+rm $STARTUP_FILE
+
 if ! grep -q "wlr-randr --output HDMI-A-1 --transform 270" "$STARTUP_FILE"; then
   echo "#!/bin/bash" > "$STARTUP_FILE"
   echo "sleep 5"
@@ -57,6 +73,8 @@ if ! grep -q "wlr-randr --output HDMI-A-1 --transform 270" "$STARTUP_FILE"; then
 fi
 
 chmod +x "$STARTUP_FILE"
+
+rm ~/install.sh
 
 read -p "Czy chcesz zrestartować komputer? (t/n): " response
 if [[ "$response" =~ ^[Tt]$ ]]; then
