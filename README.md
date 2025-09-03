@@ -28,3 +28,4 @@ chmod +x install.sh && \
 
 # TODO
 - [ ] dodać wyłączenie powiadomień
+- [ ] wyłączyć wygaszanie ekranu
