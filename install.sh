@@ -33,8 +33,8 @@ fi
 
 echo "Dodaję wpisy do crontaba..."
 (crontab -l ; echo "0 8 * * * sudo reboot") | sort - | uniq - | crontab -
-(crontab -l ; echo "30 7 * * * /usr/bin/vcgencmd display_power 1") | sort - | uniq - | crontab -
-(crontab -l ; echo "0 20 * * * /usr/bin/vcgencmd display_power 0") | sort - | uniq - | crontab -
+(crontab -l ; echo "30 7 * * * xset dpms force on") | sort - | uniq - | crontab -
+(crontab -l ; echo "0 20 * * * xset dpms force off") | sort - | uniq - | crontab -
 
 # Folder autostartu (jeśli nie istnieje, tworzony jest)
 AUTOSTART_DIR="$HOME/.config/autostart"
