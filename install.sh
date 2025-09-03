@@ -33,8 +33,8 @@ fi
 
 echo "Dodaję wpisy do crontaba..."
 (crontab -l ; echo "0 8 * * * sudo reboot") | sort - | uniq - | crontab -
-(crontab -l ; echo "30 7 * * * xset dpms force on") | sort - | uniq - | crontab -
-(crontab -l ; echo "0 20 * * * xset dpms force off") | sort - | uniq - | crontab -
+(crontab -l ; echo "30 7 * * * xrandr --output HDMI-1 --auto || xrandr --output HDMI-2 --auto") | sort - | uniq - | crontab -
+(crontab -l ; echo "0 20 * * * xrandr --output HDMI-1 --off || xrandr --output HDMI-2 --off") | sort - | uniq - | crontab -
 
 # Folder autostartu (jeśli nie istnieje, tworzony jest)
 AUTOSTART_DIR="$HOME/.config/autostart"
