@@ -25,3 +25,6 @@ curl -O https://raw.githubusercontent.com/jakubchmielewski-loca/raspberry-pi/mai
 chmod +x install.sh && \
 ./install.sh https://example.com
 ```
+
+# TODO
+- [ ] dodać wyłączenie powiadomień
