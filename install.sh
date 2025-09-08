@@ -31,6 +31,13 @@ else
   echo "Teamviewer już jest zainstalowany."
 fi
 
+
+# Usuwanie paczki realizującej powiadomienia
+sudo apt remove notification-daemon -y
+
+# Wyłącznie autowygaszania ekranu
+xset s off && xset -dpms && xset s noblank
+
 echo "Dodaję wpisy do crontaba..."
 (crontab -l ; echo "0 8 * * * sudo reboot") | sort - | uniq - | crontab -
 (crontab -l ; echo "30 7 * * * DISPLAY=:0 XAUTHORITY=/home/raspberrypi/.Xauthoriy xrandr --output HDMI-1 --rotate right --auto || xrandr --output HDMI-2 --rotate right --auto") | sort - | uniq - | crontab -
