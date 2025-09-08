@@ -32,8 +32,11 @@ else
 fi
 
 
-# Usuwanie paczki realizującej powiadomienia
-sudo apt remove notification-daemon -y
+# Wyłączenie powiadomień
+PANEL_SETTINGS=~/.config/lxpanel/LXDE-pi/panels/panel
+ENABLE_NOTIFICATIONS="notifications=1"
+DISABLE_NOTIFICATIONS="notifications=0"
+sudo sed -i -e "s/$ENABLE_NOTIFICATIONS/$DISABLE_NOTIFICATIONS/g" $PANEL_SETTINGS
 
 # Wyłącznie autowygaszania ekranu
 xset s off && xset -dpms && xset s noblank
