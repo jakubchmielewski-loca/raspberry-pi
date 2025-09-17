@@ -33,18 +33,28 @@ fi
 
 
 # Wyłączenie powiadomień
-PANEL_SETTINGS=~/.config/lxpanel/LXDE-pi/panels/panel
-ENABLE_NOTIFICATIONS="notifications=1"
-DISABLE_NOTIFICATIONS="notifications=0"
-sudo sed -i -e "s/$ENABLE_NOTIFICATIONS/$DISABLE_NOTIFICATIONS/g" $PANEL_SETTINGS
+
+if systemctl --user is-active --quiet xfce4-notifyd.service; then
+    systemctl --user stop xfce4-notifyd.service
+    systemctl --user disable xfce4-notifyd.service
+    echo "Wyłączono xfce4-notifyd."
+fi
+
+if systemctl --user is-active --quiet gnome-shell; then
+    gsettings set org.gnome.desktop.notifications show-banners false
+    gsettings set org.gnome.desktop.notifications show-in-lock-screen false
+    echo "Wyłączono powiadomienia w GNOME (Wayland)."
+fi
 
 # Wyłącznie autowygaszania ekranu
-xset s off && xset -dpms && xset s noblank
+gsettings set org.gnome.desktop.session idle-delay 0
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'nothing'
 
 echo "Dodaję wpisy do crontaba..."
 (crontab -l ; echo "0 8 * * * sudo reboot") | sort - | uniq - | crontab -
-(crontab -l ; echo "30 7 * * * DISPLAY=:0 XAUTHORITY=/home/raspberrypi/.Xauthoriy xrandr --output HDMI-1 --rotate right --auto || xrandr --output HDMI-2 --rotate right --auto") | sort - | uniq - | crontab -
-(crontab -l ; echo "0 20 * * * DISPLAY=:0 XAUTHORITY=/home/raspberrypi/.Xauthoriy xrandr --output HDMI-1 --off || xrandr --output HDMI-2 --off") | sort - | uniq - | crontab -
+(crontab -l ; echo "30 7 * * * wlr-randr --output HDMI-A-1 --transform 270 || wlr-randr --output HDMI-A-2 --transform 270") | sort - | uniq - | crontab -
+(crontab -l ; echo "0 20 * * * wlr-randr --output HDMI-A-1 --off || wlr-randr --output HDMI-A-2 --off") | sort - | uniq - | crontab -
 
 # Folder autostartu (jeśli nie istnieje, tworzony jest)
 AUTOSTART_DIR="$HOME/.config/autostart"
@@ -77,8 +87,6 @@ if ! grep -q "wlr-randr --output HDMI-A-1 --transform 270" "$STARTUP_FILE"; then
   echo "URL=$1" >> "$STARTUP_FILE"
   echo "wlr-randr --output HDMI-A-1 --transform 270" >> "$STARTUP_FILE"
   echo "wlr-randr --output HDMI-A-2 --transform 270" >> "$STARTUP_FILE"
-  echo "xrandr --output HDMI-1 --rotate right" >> "$STARTUP_FILE"
-  echo "xrandr --output HDMI-2 --rotate right" >> "$STARTUP_FILE"
   echo "firefox --kiosk $URL" >> "$STARTUP_FILE"
 fi
 
