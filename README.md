@@ -4,7 +4,7 @@
 
 Przy instalacji Raspberry Pi OS należy wybrać przeglądarkę Firefox.
 
-> Raspberry Pi OS (64-bit), port of Debian Bookworm, Released: 2024-11-19
+> Raspberry Pi OS (64-bit), port of Debian Bookworm, Released: 2025-05-13
 
 > [!IMPORTANT]
 > Przed instalacją systemu na płytce należy wpiąć kamerę.

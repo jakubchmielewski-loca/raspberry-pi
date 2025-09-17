@@ -13,13 +13,6 @@ URL=$1
 echo "Aktualizuje system"
 sudo apt update && sudo apt upgrade -y
 
-if ! command -v unclutter &> /dev/null; then
-  echo "Instaluję unclutter..."
-  sudo apt install -y unclutter
-else
-  echo "Unclutter już jest zainstalowany."
-fi
-
 if ! command -v teamviewer &> /dev/null; then
   echo "Instaluję teamviewer..."
   curl -L -o /tmp/teamviewer-host_arm64.deb https://download.teamviewer.com/download/linux/teamviewer-host_arm64.deb
@@ -53,7 +46,7 @@ gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-typ
 
 echo "Dodaję wpisy do crontaba..."
 (crontab -l ; echo "0 8 * * * sudo reboot") | sort - | uniq - | crontab -
-(crontab -l ; echo "30 7 * * * wlr-randr --output HDMI-A-1 --transform 270 || wlr-randr --output HDMI-A-2 --transform 270") | sort - | uniq - | crontab -
+(crontab -l ; echo "30 7 * * * wlr-randr --output HDMI-A-1 --on --transform 270 || wlr-randr --output HDMI-A-2 --on --transform 270") | sort - | uniq - | crontab -
 (crontab -l ; echo "0 20 * * * wlr-randr --output HDMI-A-1 --off || wlr-randr --output HDMI-A-2 --off") | sort - | uniq - | crontab -
 
 # Folder autostartu (jeśli nie istnieje, tworzony jest)
@@ -87,7 +80,7 @@ if ! grep -q "wlr-randr --output HDMI-A-1 --transform 270" "$STARTUP_FILE"; then
   echo "URL=$1" >> "$STARTUP_FILE"
   echo "wlr-randr --output HDMI-A-1 --transform 270" >> "$STARTUP_FILE"
   echo "wlr-randr --output HDMI-A-2 --transform 270" >> "$STARTUP_FILE"
-  echo "firefox --kiosk $URL" >> "$STARTUP_FILE"
+  echo "firefox --kiosk --setDefaultBrowser $URL" >> "$STARTUP_FILE"
 fi
 
 chmod +x "$STARTUP_FILE"
