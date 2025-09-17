@@ -46,8 +46,8 @@ gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-typ
 
 echo "Dodaję wpisy do crontaba..."
 (crontab -l ; echo "0 8 * * * sudo reboot") | sort - | uniq - | crontab -
-(crontab -l ; echo "30 7 * * * wlr-randr --output HDMI-A-1 --on --transform 270 || wlr-randr --output HDMI-A-2 --on --transform 270") | sort - | uniq - | crontab -
-(crontab -l ; echo "0 20 * * * wlr-randr --output HDMI-A-1 --off || wlr-randr --output HDMI-A-2 --off") | sort - | uniq - | crontab -
+(crontab -l ; echo "30 7 * * * export WAYLAND_DISPLAY=wayland-0; XDG_RUNTIME_DIR=/run/user/1000; wlr-randr --output HDMI-A-1 --on --transform 270") | sort - | uniq - | crontab -
+(crontab -l ; echo "0 20 * * * export WAYLAND_DISPLAY=wayland-0; XDG_RUNTIME_DIR=/run/user/1000; wlr-randr --output HDMI-A-1 --off") | sort - | uniq - | crontab -
 
 # Folder autostartu (jeśli nie istnieje, tworzony jest)
 AUTOSTART_DIR="$HOME/.config/autostart"
@@ -79,7 +79,6 @@ if ! grep -q "wlr-randr --output HDMI-A-1 --transform 270" "$STARTUP_FILE"; then
   echo "sleep 5"
   echo "URL=$1" >> "$STARTUP_FILE"
   echo "wlr-randr --output HDMI-A-1 --transform 270" >> "$STARTUP_FILE"
-  echo "wlr-randr --output HDMI-A-2 --transform 270" >> "$STARTUP_FILE"
   echo "firefox --kiosk --setDefaultBrowser $URL" >> "$STARTUP_FILE"
 fi
 

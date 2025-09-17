@@ -7,7 +7,7 @@ Przy instalacji Raspberry Pi OS należy wybrać przeglądarkę Firefox.
 > Raspberry Pi OS (64-bit), port of Debian Bookworm, Released: 2025-05-13
 
 > [!IMPORTANT]
-> Przed instalacją systemu na płytce należy wpiąć kamerę.
+> Przed instalacją systemu na płytce należy wpiąć kamerę. HDMI powinno być w porce oznaczonym HDMI0
 
 ## Krok 1
 
@@ -22,6 +22,10 @@ curl -O https://raw.githubusercontent.com/jakubchmielewski-loca/raspberry-pi/mai
 chmod +x install.sh && \
 ./install.sh https://example.com
 ```
+
+## Krok 3
+
+Możliwe że po reboocie wyskoczy jeszcze prompt systemowy czy pozwolić na korzystanie z kamery firefoxowi - zezwolić
 
 # TODO
 
